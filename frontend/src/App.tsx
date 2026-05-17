@@ -9,8 +9,8 @@ interface Todo {
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState('');
-  // Make sure to keep your actual live Render URL here
-  const BACKEND_URL = 'https://todo-fullstack-gabyfisher.onrender.com/todos';
+  
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     fetchTodos();
