@@ -9,9 +9,9 @@ interface Todo {
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState('');
-  const BACKEND_URL = 'https://todo-fullstack-gabyfisher.onrender.com/todos';
+  // Make sure to keep your actual live Render URL here
+  const BACKEND_URL = 'https://todo-backend-yourname.onrender.com/todos';
 
-  // Load todos from backend when the page opens
   useEffect(() => {
     fetchTodos();
   }, []);
@@ -68,39 +68,123 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <h2>My Todo List</h2>
-      
-      <form onSubmit={addTodo} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        <input 
-          type="text" 
-          value={input} 
-          onChange={(e) => setInput(e.target.value)} 
-          placeholder="Add a new task..." 
-          style={{ flex: 1, padding: '8px' }}
-        />
-        <button type="submit" style={{ padding: '8px 16px' }}>Add</button>
-      </form>
+    <div style={{ 
+      minHeight: '100vh', 
+      backgroundColor: '#f8fafc', 
+      padding: '40px 20px', 
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' 
+    }}>
+      <div style={{ 
+        maxWidth: '550px', 
+        margin: '0 auto', 
+        backgroundColor: '#ffffff', 
+        borderRadius: '12px', 
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+        padding: '32px'
+      }}>
+        <h2 style={{ 
+          margin: '0 0 24px 0', 
+          color: '#1e293b', 
+          fontSize: '28px', 
+          fontWeight: 700,
+          textAlign: 'center'
+        }}>
+          Task Manager
+        </h2>
+        
+        <form onSubmit={addTodo} style={{ display: 'flex', gap: '12px', marginBottom: '28px' }}>
+          <input 
+            type="text" 
+            value={input} 
+            onChange={(e) => setInput(e.target.value)} 
+            placeholder="What needs to be done?" 
+            style={{ 
+              flex: 1, 
+              padding: '12px 16px', 
+              borderRadius: '8px', 
+              border: '1px solid #cbd5e1',
+              fontSize: '16px',
+              outline: 'none',
+              transition: 'border-color 0.2s',
+              backgroundColor: '#f8fafc'
+            }}
+          />
+          <button type="submit" style={{ 
+            padding: '12px 24px', 
+            borderRadius: '8px', 
+            border: 'none',
+            backgroundColor: '#4f46e5',
+            color: '#ffffff',
+            fontWeight: 600,
+            fontSize: '16px',
+            cursor: 'pointer',
+            transition: 'background-color 0.2s'
+          }}>
+            Add Task
+          </button>
+        </form>
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {todos.map(todo => (
-          <li key={todo.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #eee' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <input 
-                type="checkbox" 
-                checked={todo.completed} 
-                onChange={() => toggleTodo(todo.id, todo.completed)}
-              />
-              <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-                {todo.title}
-              </span>
-            </div>
-            <button onClick={() => deleteTodo(todo.id)} style={{ background: '#ff4d4d', color: 'white', border: 'none', padding: '4px 8px', cursor: 'pointer' }}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          {todos.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#64748b', fontSize: '15px' }}>No tasks yet. Add one above!</p>
+          ) : (
+            todos.map(todo => (
+              <li key={todo.id} style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between', 
+                padding: '16px', 
+                marginBottom: '12px',
+                borderRadius: '8px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e2e8f0',
+                transition: 'transform 0.2s, box-shadow 0.2s'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: 1 }}>
+                  <input 
+                    type="checkbox" 
+                    checked={todo.completed} 
+                    onChange={() => toggleTodo(todo.id, todo.completed)}
+                    style={{
+                      width: '18px',
+                      height: '18px',
+                      cursor: 'pointer',
+                      accentColor: '#4f46e5'
+                    }}
+                  />
+                  <span style={{ 
+                    fontSize: '16px',
+                    color: todo.completed ? '#94a3b8' : '#334155',
+                    textDecoration: todo.completed ? 'line-through' : 'none',
+                    wordBreak: 'break-word',
+                    userSelect: 'none'
+                  }}>
+                    {todo.title}
+                  </span>
+                </div>
+                <button 
+                  onClick={() => deleteTodo(todo.id)} 
+                  style={{ 
+                    background: 'none', 
+                    color: '#ef4444', 
+                    border: 'none', 
+                    padding: '6px 12px', 
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontWeight: 500,
+                    fontSize: '14px',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#fef2f2')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                >
+                  Delete
+                </button>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
     </div>
   );
 }
