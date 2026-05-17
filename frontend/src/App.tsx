@@ -9,7 +9,7 @@ interface Todo {
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState('');
-  const BACKEND_URL = 'http://localhost:3000/todos';
+  const BACKEND_URL = 'https://todo-fullstack-gabyfisher.onrender.com/todos';
 
   // Load todos from backend when the page opens
   useEffect(() => {
